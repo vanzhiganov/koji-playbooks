@@ -1,10 +1,10 @@
 # Set up the client for authentication
 
-- name: Install epel repository required by koji
-  package:
-    name:
-      - epel-release
-    state: present
+#- name: Install epel repository required by koji
+#  package:
+#    name:
+#      - epel-release
+#    state: present
 
 - name: Install Koji client packages
   package:

@@ -67,9 +67,23 @@
   shell: psql koji koji < /usr/share/doc/koji*/docs/schema.sql
   args:
     executable: /bin/bash
-  when: database_is_populated.failed
+  when: 
+    - database_is_populated.failed
+    - ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 7
+
   changed_when: true
   become_user: koji
+
+- name: populate the koji database
+  shell: psql koji koji < /usr/share/koji/schema.sql
+  args:
+    executable: /bin/bash
+  changed_when: true
+  become_user: koji
+  when: 
+    - database_is_populated.failed
+    - ansible_os_family == "RedHat" and ansible_distribution_major_version|int > 8
+
 
 - name: insert {{ KOJI_USER }} as a user
   postgresql_query:

@@ -78,6 +78,7 @@
     - rcm/debbuild
     - "HTTP/kojidev.{{ KOJI_DOMAIN }}"
     - "compile/kojidev.{{ KOJI_DOMAIN }}"
+    # - "compile/koji-i386.{{ KOJI_DOMAIN }}"
     - koji/kojiweb
     - koji/kojira
     - koji/garbagecollector
