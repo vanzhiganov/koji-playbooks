@@ -29,8 +29,8 @@
     - restart krb5kdc
 
 - name: copy /var/kerberos/krb5kdc/kdc.conf
-  copy:
-    src: files/kdc.conf
+  template:
+    src: kdc.conf
     dest: /var/kerberos/krb5kdc/kdc.conf
     owner: root
     group: root
@@ -50,7 +50,7 @@
     - restart krb5kdc
 
 - name: initialize KDC DB
-  command: /usr/sbin/kdb5_util create -s -P test
+  command: /usr/sbin/kdb5_util create -s -P {{ KRB_PASSWORD }}
   args:
     creates: /var/kerberos/krb5kdc/principal.ok
   notify:
@@ -73,12 +73,11 @@
     name: "{{ item }}"
     keytab: "/var/local/{{ item | replace ('/', '.') }}.keytab"
   with_items:
-    - kdreyer
+    - "{{ KOJI_USER }}"
     - builder
     - rcm/debbuild
     - "HTTP/kojidev.{{ KOJI_DOMAIN }}"
     - "compile/kojidev.{{ KOJI_DOMAIN }}"
-    # - "compile/koji-i386.{{ KOJI_DOMAIN }}"
     - koji/kojiweb
     - koji/kojira
     - koji/garbagecollector
