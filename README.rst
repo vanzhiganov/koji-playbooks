@@ -65,6 +65,7 @@ For example,
 .. code-block:: yaml
   vars:
     KOJI_USER: ktdreyer
+    KRB_PASSWORD: test
 
 
 Inventory
